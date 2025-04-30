@@ -180,7 +180,6 @@ main h2 {
   border-left: 4px solid #c7beb1;
   background-color: #f9f7f4;
   margin-bottom: 1rem;
-  text-align: justify;
 }
 
 /* Footer styles */
@@ -192,4 +191,65 @@ footer {
   font-style: italic;
   color: #333;
   border-top: 1px solid #dcd6ce;
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .portrait img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .intro h1 {
+    font-size: 2rem;
+  }
+
+  .intro p {
+    font-size: 1rem;
+  }
+
+  .linkedin {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .menu a {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  main h2 {
+    font-size: 1.5rem;
+  }
+
+  .repos, .recommendations, .experience, .about {
+    padding: 1rem;
+  }
+
+  .repo-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .recommendation, .job {
+    padding: 0.5rem;
+  }
+
+  footer {
+    font-size: 0.9rem;
+  }
 }
