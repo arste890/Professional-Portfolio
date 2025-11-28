@@ -28,13 +28,13 @@
     </div>
     <nav class="menu">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#about">About</a></li>
-        <li><a href="index.html#experience">Experience</a></li>
-        <li><a href="index.html#volunteer">Volunteer</a></li>
-        <li><a href="index.html#recommendations">Endorsements</a></li>
-        <li><a href="media.html">Media</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#experience">Experience</a></li>
+        <li><a href="/#volunteer">Volunteer</a></li>
+        <li><a href="/#recommendations">Endorsements</a></li>
+        <li><a href="/media">Media</a></li>
+        <li><a href="/projects">Projects</a></li>
       </ul>
     </nav>
   </header>
@@ -101,12 +101,38 @@
     <div class="modal-content" id="modalContent"></div>
   </div>
 
+  <!-- Scroll to top button -->
+  <button id="scrollToTop" title="Go to top">↑</button>
+
   <footer>
     <!-- Footer with copyright information -->
     <p>© 2025 Alec R. Stevens • Built for professional and academic presentation</p>
   </footer>
 
   <script>
+    // Scroll to top functionality
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    
+    function updateScrollButton() {
+      const modalOpen = modal.classList.contains('active');
+      if (window.pageYOffset > 300 && !modalOpen) {
+        scrollToTopBtn.classList.add('visible');
+        scrollToTopBtn.classList.remove('hidden');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+        scrollToTopBtn.classList.add('hidden');
+      }
+    }
+    
+    window.addEventListener('scroll', updateScrollButton);
+    
+    scrollToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
     // Media modal functionality
     const modal = document.getElementById('mediaModal');
     const modalContent = document.getElementById('modalContent');
@@ -152,6 +178,7 @@
               </div>
               <div class="modal-caption">
                 <h3>${title}</h3>
+                <h4 class="description-header">Description</h4>
                 <p>${description}</p>
               </div>
             `;
@@ -159,8 +186,10 @@
         }
 
         modalContent.innerHTML = content;
+        modalContent.className = 'modal-content' + (type === 'video' ? ' video-modal' : '');
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        updateScrollButton();
       });
     });
 
@@ -175,6 +204,7 @@
       modal.classList.remove('active');
       document.body.style.overflow = 'auto';
       modalContent.innerHTML = '';
+      updateScrollButton();
     }
 
     // Close modal with Escape key
@@ -183,6 +213,33 @@
         closeModal();
       }
     });
+
+    // Handle fullscreen change events to fix video controls
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    function handleFullscreenChange() {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+          !document.mozFullScreenElement && !document.msFullscreenElement) {
+        // Exited fullscreen - refresh the video element
+        const video = modalContent.querySelector('video');
+        if (video) {
+          const currentTime = video.currentTime;
+          const isPaused = video.paused;
+          const src = video.src;
+          
+          // Force immediate refresh
+          video.src = src;
+          video.load();
+          video.currentTime = currentTime;
+          if (!isPaused) {
+            video.play().catch(() => {});
+          }
+        }
+      }
+    }
   </script>
 </body>
 </html>
