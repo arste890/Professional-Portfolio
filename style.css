@@ -202,7 +202,7 @@ main h2 {
   padding: 1.25rem;
   padding-left: calc(1.25rem + 1px);
   border-left: 4px solid #0077b5;
-  background: linear-gradient(to right, #f8f9fa, #ffffff);
+  background: #f8f9fa;
   border-radius: 6px;
   transition: all 0.3s ease;
 }
@@ -289,9 +289,55 @@ main h2 {
   line-height: 1.8;
 }
 
+/* Scroll to top button */
+#scrollToTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0077b5, #005582);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+#scrollToTop:hover {
+  background: linear-gradient(135deg, #005582, #003d5c);
+  box-shadow: 0 6px 20px rgba(0, 119, 181, 0.4);
+  transform: translateY(-3px);
+}
+
+#scrollToTop.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#scrollToTop.visible:hover {
+  transform: translateY(-3px);
+}
+
+#scrollToTop.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+}
+
 /* Footer styles */
 footer {
-  background: linear-gradient(to right, #ffffff, #f8f9fa);
+  background: #f8f9fa;
   text-align: center;
   padding: 2rem 1rem;
   font-size: 0.95rem;
@@ -317,6 +363,7 @@ footer {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .media-item:hover {
@@ -369,6 +416,54 @@ footer {
   overflow: hidden;
 }
 
+
+
+/* Video play button overlay */
+.media-item[data-type="video"] video,
+.media-item[data-type="video"] iframe {
+  position: relative;
+}
+
+.media-item[data-type="video"]::before {
+  content: '';
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  z-index: 10;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.media-item[data-type="video"]::after {
+  content: '';
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  width: 0;
+  height: 0;
+  border-left: 20px solid #ffffff;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  z-index: 11;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.media-item[data-type="video"]:hover::before {
+  background: rgba(0, 119, 181, 0.9);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.media-item[data-type="video"]:hover::after {
+  border-left-color: #ffffff;
+}
+
 /* Modal/Lightbox styles */
 .media-modal {
   display: none;
@@ -394,6 +489,7 @@ footer {
   background: #ffffff;
   border-radius: 8px;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -429,6 +525,14 @@ footer {
   object-position: 33% center;
 }
 
+.modal-content video::-webkit-media-controls-panel {
+  position: relative;
+}
+
+.modal-content video::-webkit-media-controls {
+  position: relative;
+}
+
 .modal-caption {
   padding: 1.5rem;
   background: #ffffff;
@@ -447,6 +551,25 @@ footer {
   color: #495057;
   line-height: 1.6;
   margin: 0;
+}
+
+/* Video modal caption with description initially hidden */
+.modal-content.video-modal .modal-caption {
+  min-height: calc(100vh - 45vw);
+  padding-bottom: 2rem;
+}
+
+.modal-content.video-modal .modal-caption .description-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0077b5;
+  margin-top: calc(100vh - 45vw - 9rem);
+  margin-bottom: 0.5rem;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.modal-content.video-modal .modal-caption p {
+  margin-top: 0;
 }
 
 .modal-close {
