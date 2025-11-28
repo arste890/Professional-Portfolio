@@ -242,7 +242,6 @@
     hamburger.addEventListener('click', function() {
       this.classList.toggle('active');
       menu.classList.toggle('active');
-      document.body.classList.toggle('menu-open', menu.classList.contains('active'));
       document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
     });
     
@@ -252,7 +251,6 @@
       link.addEventListener('click', function() {
         hamburger.classList.remove('active');
         menu.classList.remove('active');
-        document.body.classList.remove('menu-open');
         document.body.style.overflow = 'auto';
       });
     });
@@ -262,7 +260,6 @@
       if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
         hamburger.classList.remove('active');
         menu.classList.remove('active');
-        document.body.classList.remove('menu-open');
         document.body.style.overflow = 'auto';
       }
     });
