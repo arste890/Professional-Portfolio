@@ -252,11 +252,23 @@
     function openAwardModal() {
       document.getElementById('awardModal').style.display = 'block';
       document.body.style.overflow = 'hidden';
+      
+      // Hide scroll to top button when modal is open
+      const scrollToTop = document.getElementById('scrollToTop');
+      if (scrollToTop) {
+        scrollToTop.classList.add('modal-open');
+      }
     }
     
     function closeAwardModal() {
       document.getElementById('awardModal').style.display = 'none';
       document.body.style.overflow = 'auto';
+      
+      // Restore scroll to top button visibility
+      const scrollToTop = document.getElementById('scrollToTop');
+      if (scrollToTop) {
+        scrollToTop.classList.remove('modal-open');
+      }
     }
     
     // Close modal when clicking outside of it
