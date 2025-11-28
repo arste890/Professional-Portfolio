@@ -247,10 +247,14 @@
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
       
-      // Hide hamburger menu when modal is open
+      // Hide hamburger menu and scroll to top button when modal is open
       const hamburger = document.getElementById('hamburger');
+      const scrollToTop = document.getElementById('scrollToTop');
       if (hamburger) {
         hamburger.classList.add('modal-open');
+      }
+      if (scrollToTop) {
+        scrollToTop.classList.add('modal-open');
       }
       
       updateScrollButton();
@@ -306,10 +310,14 @@
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
       
-      // Restore hamburger menu visibility
+      // Restore hamburger menu and scroll to top button visibility
       const hamburger = document.getElementById('hamburger');
+      const scrollToTop = document.getElementById('scrollToTop');
       if (hamburger) {
         hamburger.classList.remove('modal-open');
+      }
+      if (scrollToTop) {
+        scrollToTop.classList.remove('modal-open');
       }
       
       modalContent.innerHTML = '';
