@@ -720,11 +720,6 @@ footer {
     justify-content: center;
   }
 
-  /* Make page background black when menu is open */
-  body.menu-open {
-    background-color: #000000;
-  }
-
   .menu.active {
     display: flex;
   }
