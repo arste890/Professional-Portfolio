@@ -168,6 +168,17 @@
       });
     });
 
+    // Set video thumbnail by advancing to a frame with content
+    document.addEventListener('DOMContentLoaded', function() {
+      const videos = document.querySelectorAll('.media-item video');
+      videos.forEach(video => {
+        video.addEventListener('loadedmetadata', function() {
+          // Set to 10% of video duration to get a frame with content
+          this.currentTime = this.duration * 0.1;
+        });
+      });
+    });
+
     // Media modal functionality
     const modal = document.getElementById('mediaModal');
     const modalContent = document.getElementById('modalContent');
