@@ -322,6 +322,50 @@
         behavior: 'smooth'
       });
     });
+
+    // Active section highlighting
+    function updateActiveSection() {
+      const sections = document.querySelectorAll('section[id]');
+      const menuLinks = document.querySelectorAll('.menu a[href^="#"]');
+      
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100; // Account for sticky nav
+        const sectionHeight = section.offsetHeight;
+        
+        if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      // Remove active class from all section links
+      menuLinks.forEach(link => {
+        if (link.getAttribute('href').startsWith('#')) {
+          link.classList.remove('active');
+        }
+      });
+      
+      // Add active class to current section link
+      if (currentSection) {
+        const activeLink = document.querySelector(`.menu a[href="#${currentSection}"]`);
+        if (activeLink) {
+          activeLink.classList.add('active');
+        }
+      } else {
+        // If no section is active, activate Home
+        const homeLink = document.querySelector('.menu a[href="/"]');
+        if (homeLink) {
+          homeLink.classList.add('active');
+        }
+      }
+    }
+    
+    // Update on scroll
+    window.addEventListener('scroll', updateActiveSection);
+    
+    // Update on page load
+    updateActiveSection();
   </script>
 
   <script>
